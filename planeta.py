@@ -32,6 +32,7 @@ class Planeta(object):
         '''
 
         x, y, vx, vy = self.y_actual
+
         dx = datos[0]
         dy = datos[1]
         dvx = datos[2]
@@ -42,8 +43,8 @@ class Planeta(object):
         vx += dvx
         vy += dvy
 
-        fx = x*(G*M)*(2* self.alpha / (x**2 + y**2)**2 - 1 / (x**2 + y**2)**(3/2))
-        fy = y*(G*M)*(2* self.alpha / (x**2 + y**2)**2 - 1 / (x**2 + y**2)**(3/2))
+        fx = x*(G*M)*((2* self.alpha / ((x**2 + y**2)**2)) - (1 / (np.sqrt(x**2 + y**2))**3))
+        fy = y*(G*M)*((2* self.alpha / ((x**2 + y**2)**2)) - (1 / (np.sqrt(x**2 + y**2))**3))
 
         return np.array([vx, vy, fx, fy])
 
@@ -63,11 +64,11 @@ class Planeta(object):
         Similar a avanza_euler, pero usando Runge-Kutta 4.
         '''
         k1 = self.ecuacion_de_movimiento()
-        k2 = self.ecuacion_de_movimiento(dt/2 * k1)
-        k3 = self.ecuacion_de_movimiento(dt/2 * k2)
+        k2 = self.ecuacion_de_movimiento(dt/2. * k1)
+        k3 = self.ecuacion_de_movimiento(dt/2. * k2)
         k4 = self.ecuacion_de_movimiento(dt * k3)
 
-        yn = self.y_actual + dt/6 * (k1 + 2*k2 + 2*k3 + k4)
+        yn = self.y_actual + dt/6. * (k1 + 2*k2 + 2*k3 + k4)
 
         self.y_actual = yn
         self.t_actual += dt
@@ -94,7 +95,7 @@ class Planeta(object):
         '''
         x, y, vx, vy = self.y_actual
         potencial = - G*M*m/((x**2 + y**2)**(1/2))  + self.alpha*G*M*m /((x**2 + y**2))
-        energia = (vx**2 +vy**2) * m/2 + potencial
+        energia = (vx**2 +vy**2) * m/2. + potencial
 
         return energia
         pass

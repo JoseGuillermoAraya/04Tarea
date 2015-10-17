@@ -5,8 +5,8 @@ from planeta import Planeta
 import pdb
 import numpy as np
 import matplotlib.pyplot as plt
-VY0=0.2
-condicion_inicial = [10, 0, 0, VY0]
+VY0=0.3
+condicion_inicial = np.array([10., 0, 0, VY0])
 
 p = Planeta(condicion_inicial)
 
@@ -31,5 +31,5 @@ for i in range (1,numero_pasos):
     vx[i] = resultados[2]
     vy[i] = resultados[3]
 
-plt.scatter(x , y)
+plt.plot(x , y)
 plt.show()
