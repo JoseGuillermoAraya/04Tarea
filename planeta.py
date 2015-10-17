@@ -23,14 +23,20 @@ class Planeta(object):
         self.t_actual = 0.
         self.alpha = alpha
 
-    def ecuacion_de_movimiento(self,dx=0,dy=0,dvx=0,dvy=0):
+    def ecuacion_de_movimiento(self,datos=np.array([0,0,0,0])):
         '''
         Implementa la ecuación de movimiento, como sistema de ecuaciónes de
         primer orden.
         Recibe dx,dy,dvx dvy, elementos que se sumaran a la componente
         correspondiente de fx o fy
         '''
+
         x, y, vx, vy = self.y_actual
+        dx = datos[0]
+        dy = datos[1]
+        dvx = datos[2]
+        dvy = datos[3]
+
         x += dx
         y += dy
         vx += dvx

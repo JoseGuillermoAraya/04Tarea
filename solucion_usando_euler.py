@@ -10,8 +10,8 @@ condicion_inicial = [10, 0, 0, VY0]
 
 p = Planeta(condicion_inicial)
 
-t_final =  100.
-numero_pasos = 100+1
+t_final =  1000.
+numero_pasos = 500+1
 dt= t_final / (float)(numero_pasos)
 
 x = np.zeros(numero_pasos)
@@ -23,8 +23,8 @@ vy = np.zeros(numero_pasos)
 [x[0],y[0],vx[0],vy[0]] = condicion_inicial
 
 for i in range (1,numero_pasos):
-    #pdb.set_trace()
-    p.avanza_euler(dt)
+    pdb.set_trace()
+    p.avanza_rk4(dt)
     resultados = p.y_actual
     x[i] = resultados[0]
     y[i] = resultados[1]
