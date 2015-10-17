@@ -82,5 +82,9 @@ class Planeta(object):
         '''
         Calcula la enérgía total del sistema en las condiciones actuales.
         '''
+        x, y, vx, vy = self.y_actual
+        potencial = - G*M*m/((x**2 + y**2)**(1/2))  + self.alpha G*M*m /((x**2 + y**2))
+        energia = (vx**2 +vy**2) * m/2 + potencial
 
+        return energia
         pass
