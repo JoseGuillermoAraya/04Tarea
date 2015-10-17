@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+G=1
+M=1
+m=1
 class Planeta(object):
     '''
     Complete el docstring.
