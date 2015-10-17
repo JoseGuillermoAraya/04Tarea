@@ -11,7 +11,7 @@ condicion_inicial = [10, 0, 0, VY0]
 p = Planeta(condicion_inicial)
 
 t_final =  100.
-numero_pasos = 100
+numero_pasos = 100+1
 dt= t_final / (float)(numero_pasos)
 
 x = np.zeros(numero_pasos)
@@ -19,13 +19,17 @@ y = np.zeros(numero_pasos)
 vx = np.zeros(numero_pasos)
 vy = np.zeros(numero_pasos)
 
-resultados = [[x , y , vx , vy]]
-resultados[0] = condicion_inicial
 
-for i in range (1,numero_pasos+1):
-    pdb.set_trace()
+[x[0],y[0],vx[0],vy[0]] = condicion_inicial
+
+for i in range (1,numero_pasos):
+    #pdb.set_trace()
     p.avanza_euler(dt)
-    resultados[i] = p.y_actual
+    resultados = p.y_actual
+    x[i] = resultados[0]
+    y[i] = resultados[1]
+    vx[i] = resultados[2]
+    vy[i] = resultados[3]
 
-plt.scatter(resultados[0] , resultados[1])
+plt.scatter(x , y)
 plt.show()

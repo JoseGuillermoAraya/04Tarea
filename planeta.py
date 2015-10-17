@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import numpy as np
 G=1
 M=1
 m=1
@@ -38,7 +39,7 @@ class Planeta(object):
         fx = x*(G*M)*(2* self.alpha / (x**2 + y**2)**2 - 1 / (x**2 + y**2)**(3/2))
         fy = y*(G*M)*(2* self.alpha / (x**2 + y**2)**2 - 1 / (x**2 + y**2)**(3/2))
 
-        return [vx, vy, fx, fy]
+        return np.array([vx, vy, fx, fy])
 
     def avanza_euler(self, dt):
         '''
