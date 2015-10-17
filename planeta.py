@@ -77,12 +77,12 @@ class Planeta(object):
         '''
         Similar a avanza_euler, pero usando Verlet.
         '''
-        (x , y, vx, vy)=self.y_actual
-        yn = [ x , y ] + [ vx , vy ] * dt + 1/2 * self.ecuacion_de_movimiento()[2:3] * dt**2
-        Yn = [yn[0] , yn[1], 0, 0]
-        vn = [ vx , vy ] + 1/2 * (self.ecuacion_de_movimiento()[2:3] + self.ecuacion_de_movimiento(Yn)[2:3]) * dt
+        x , y, vx, vy = self.y_actual
+        yn = np.array([ x , y ]) + np.array([ vx , vy ]) * dt + 1/2. * self.ecuacion_de_movimiento()[2:] * dt**2
+        Yn = np.array([yn[0] , yn[1], 0, 0])
+        vn = np.array([ vx , vy ]) + 1/2. * (self.ecuacion_de_movimiento()[2:] + self.ecuacion_de_movimiento(Yn)[2:]) * dt
 
-        actual = [yn[0], yn[1], vn[0], vn[1]]
+        actual = np.array([yn[0], yn[1], vn[0], vn[1]])
         self.y_actual = actual
         self.t_actual += dt
 

@@ -23,8 +23,8 @@ vy = np.zeros(numero_pasos)
 [x[0],y[0],vx[0],vy[0]] = condicion_inicial
 
 for i in range (1,numero_pasos):
-    pdb.set_trace()
-    p.avanza_rk4(dt)
+    #pdb.set_trace()
+    p.avanza_verlet(dt)
     resultados = p.y_actual
     x[i] = resultados[0]
     y[i] = resultados[1]
