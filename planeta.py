@@ -26,8 +26,8 @@ class Planeta(object):
         primer orden.
         '''
         x, y, vx, vy = self.y_actual
-        # fx = ...
-        # fy = ...
+         fx = ( vx , x*(G*M)(2*alpha / (x**2 + y**2)**2 - 1 / (x**2 + y**2)**(3/2)) )
+         fy = ( vy , y*(G*M)(2*alpha / (x**2 + y**2)**2 - 1 / (x**2 + y**2)**(3/2)) )
         return [vx, vy, fx, fy]
 
     def avanza_euler(self, dt):
@@ -36,6 +36,8 @@ class Planeta(object):
         en un intervalo de tiempo dt usando el método de Euler explícito. El
         método no retorna nada, pero re-setea los valores de self.y_actual.
         '''
+
+
         pass
 
     def avanza_rk4(self, dt):
@@ -54,6 +56,6 @@ class Planeta(object):
         '''
         Calcula la enérgía total del sistema en las condiciones actuales.
         '''
+
+
         pass
-
-
