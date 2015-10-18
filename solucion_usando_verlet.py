@@ -23,9 +23,16 @@ energia = np.zeros(numero_pasos)
 
 [x[0],y[0],vx[0],vy[0]] = condicion_inicial
 energia[0] = p.energia_total()
-for i in range (1,numero_pasos):
-    #pdb.set_trace()
-    p.avanza_verlet(dt)
+p.avanza_rk4(dt)
+resultados = p.y_actual
+x[1] = resultados[0]
+y[1] = resultados[1]
+vx[1] = resultados[2]
+vy[1] = resultados[3]
+
+for i in range (2,numero_pasos):
+
+    p.avanza_verlet(dt,x[i-2],y[i-2])
     resultados = p.y_actual
     x[i] = resultados[0]
     y[i] = resultados[1]

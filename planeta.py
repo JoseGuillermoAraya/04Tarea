@@ -43,8 +43,8 @@ class Planeta(object):
         vx += dvx
         vy += dvy
 
-        fx = x*(G*M)*((2* self.alpha / ((x**2 + y**2)**2)) - (1 / (np.sqrt(x**2 + y**2))**3))
-        fy = y*(G*M)*((2* self.alpha / ((x**2 + y**2)**2)) - (1 / (np.sqrt(x**2 + y**2))**3))
+        fx = x*(G*M)*(((2.* self.alpha) / ((x**2 + y**2)**2)) - (1. / (np.sqrt(x**2 + y**2))**3))
+        fy = y*(G*M)*(((2.* self.alpha) / ((x**2 + y**2)**2)) - (1. / (np.sqrt(x**2 + y**2))**3))
 
         return np.array([vx, vy, fx, fy])
 
@@ -74,9 +74,11 @@ class Planeta(object):
         self.t_actual += dt
         pass
 
-    def avanza_verlet(self, dt):
+    def avanza_verlet(self, dt, x_p,y_p):
         '''
         Similar a avanza_euler, pero usando Verlet.
+        recibe las posiciones en el paso previo
+        '''
         '''
         x , y, vx, vy = self.y_actual
         yn = np.array([ x , y ]) + np.array([ vx , vy ]) * dt + 1/2. * self.ecuacion_de_movimiento()[2:] * dt**2
@@ -86,6 +88,17 @@ class Planeta(object):
         actual = np.array([yn[0], yn[1], vn[0], vn[1]])
         self.y_actual = actual
         self.t_actual += dt
+        '''
+        Y_previo = np.array([x_p,y_p])
+        x , y, vx, vy = self.y_actual
+        Y = np.array([x,y])
+        Yn = 2 * Y - Y_previo + dt**2 * self.ecuacion_de_movimiento()[2:]
+        Vn = (Yn - Y_previo) / (2*dt)
+
+        actual = np.array([Yn[0],Yn[1],Vn[0], Vn[1]])
+        self.y_actual = actual
+        self.t_actual +=dt
+
 
         pass
 
@@ -94,7 +107,7 @@ class Planeta(object):
         Calcula la enérgía total del sistema en las condiciones actuales.
         '''
         x, y, vx, vy = self.y_actual
-        potencial = - G*M*m/((x**2 + y**2)**(1/2))  + self.alpha*G*M*m /((x**2 + y**2))
+        potencial = - G*M*m/(np.sqrt(x**2 + y**2))  + self.alpha*G*M*m /((x**2 + y**2))
         energia = (vx**2 +vy**2) * m/2. + potencial
 
         return energia
