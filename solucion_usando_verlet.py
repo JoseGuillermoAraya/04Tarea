@@ -25,26 +25,22 @@ energia = np.zeros(numero_pasos)
 energia[0] = p.energia_total()
 for i in range (1,numero_pasos):
     #pdb.set_trace()
-    p.avanza_euler(dt)
+    p.avanza_verlet(dt)
     resultados = p.y_actual
     x[i] = resultados[0]
     y[i] = resultados[1]
     vx[i] = resultados[2]
     vy[i] = resultados[3]
     energia[i] = p.energia_total()
-
 fig=plt.figure(1)
 plt.subplot(2, 1, 1)
 fig.subplots_adjust(hspace=.5)
 plt.plot(x , y, label = "Trayectoria")
-plt.title("solucion usando Euler")
+plt.title("solucion usando Verlet")
 plt.xlabel("X")
 plt.ylabel("Y")
-
 t_values = np.linspace(1,t_final,numero_pasos)
 plt.subplot(2, 1, 2)
 plt.plot(t_values,energia)
 plt.title("Energia en cada instante")
-plt.xlabel("Tiempo")
-plt.ylabel("Energia")
 plt.show()
