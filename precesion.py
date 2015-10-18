@@ -10,8 +10,8 @@ condicion_inicial = np.array([10., 0, 0, VY0])
 
 p = Planeta(condicion_inicial, 10**(-2.844))
 
-t_final =  30000.
-numero_pasos = 20000+1
+t_final =  180.*30
+numero_pasos = 1000+1
 dt= t_final / (float)(numero_pasos)
 
 x = np.zeros(numero_pasos)
