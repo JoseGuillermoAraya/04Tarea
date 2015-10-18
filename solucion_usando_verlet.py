@@ -29,7 +29,7 @@ x[1] = resultados[0]
 y[1] = resultados[1]
 vx[1] = resultados[2]
 vy[1] = resultados[3]
-
+energia[1] = p.energia_total()
 for i in range (2,numero_pasos):
 
     p.avanza_verlet(dt,x[i-2],y[i-2])
@@ -39,15 +39,20 @@ for i in range (2,numero_pasos):
     vx[i] = resultados[2]
     vy[i] = resultados[3]
     energia[i] = p.energia_total()
+
 fig=plt.figure(1)
 plt.subplot(2, 1, 1)
 fig.subplots_adjust(hspace=.5)
 plt.plot(x , y, label = "Trayectoria")
-plt.title("solucion usando Verlet")
+plt.title("Trayectoria bajo un potencial central, Verlet")
 plt.xlabel("X")
 plt.ylabel("Y")
 t_values = np.linspace(1,t_final,numero_pasos)
 plt.subplot(2, 1, 2)
 plt.plot(t_values,energia)
+plt.xlabel("Tiempo")
+plt.ylabel("Energia")
 plt.title("Energia en cada instante")
+
+plt.savefig("verlet.jpg")
 plt.show()
