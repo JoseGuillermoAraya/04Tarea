@@ -77,6 +77,7 @@ for i in range(1,len(perihelio[0])):
 
 vel_angular = np.round(vel_angular,7)
 velocidad_precesion = scipy.stats.mode(vel_angular)[0][0]
+print("velocidad angular de precesion = "+(str)(vel_angular))
 print("velocidad angular de precesion = "+(str)(velocidad_precesion))
 
 
