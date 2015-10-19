@@ -6,7 +6,37 @@ import pdb
 import numpy as np
 import scipy.stats
 import matplotlib.pyplot as plt
+
 VY0=0.3
+
+'''--------------------------------------------------------------------------'''
+def es_perihelio(r,valor,tolerancia):
+    '''recibe un valor de r, ve si está en el rango de tolerancia '''
+    return (valor-tolerancia<r and r<valor+tolerancia)
+'''--------------------------------------------------------------------------'''
+def calculo_velocidades_angulares(perihelio):
+    '''recibe un arreglo con las coordenadas t,x e y de los perihelios
+    y calcula un arreglo de velocidades angulares haciendo diferencias entre
+    un set de coordenadas y las siguientes'''
+
+    vel_angular = np.zeros(len(perihelio[0])-1)
+
+    phi_anterior =  np.tan(perihelio[2][0]/(perihelio[1][0]))
+    t_anterior = perihelio[0][0]
+    for i in range(1,len(perihelio[0])):
+        phi = np.tan(perihelio[2][i]/(perihelio[1][i]))
+        t = perihelio[0][i]
+        dphi = phi - phi_anterior
+        dt = t-t_anterior
+
+        vel_angular[i-1] = dphi/dt
+
+        t_anterior = t
+        phi_anterior = phi
+    vel_angular = np.round(vel_angular,7)
+    return vel_angular
+'''--------------------------------------------------------------------------'''
+
 condicion_inicial = np.array([10., 0, 0, VY0])
 
 p = Planeta(condicion_inicial, 10**(-2.844))
@@ -36,10 +66,9 @@ x[1] = resultados[0]
 y[1] = resultados[1]
 vx[1] = resultados[2]
 vy[1] = resultados[3]
-
 r[1] = np.sqrt(x[1]**2+y[1]**2)
-
 energia[1] = p.energia_total()
+
 for i in range (2,numero_pasos):
     #pdb.set_trace()
     p.avanza_verlet(dt,x[i-2],y[i-2])
@@ -51,31 +80,16 @@ for i in range (2,numero_pasos):
     energia[i] = p.energia_total()
     r[i] = np.sqrt(x[i]**2+y[i]**2)
 
-    '''encontrando perhielio'''
-    e = 0.000005
-    valor =10
-    if valor-e<r[i] and r[i]<valor+e:
+    tolerancia = 0.000005
+    valor_estimado =10
+
+    if es_perihelio(r[i],valor_estimado, tolerancia):
         perihelio[0].append(p.t_actual)
         perihelio[1].append(x[i])
         perihelio[2].append(y[i])
 
-'''calculo velocidad angular de precesion precesion'''
-vel_angular = np.zeros(len(perihelio[0])-1)
+vel_angular=calculo_velocidades_angulares(perihelio)
 
-phi_anterior =  np.tan(perihelio[2][0]/(perihelio[1][0]))
-t_anterior = perihelio[0][0]
-for i in range(1,len(perihelio[0])):
-    phi = np.tan(perihelio[2][i]/(perihelio[1][i]))
-    t = perihelio[0][i]
-    dphi = phi - phi_anterior
-    dt = t-t_anterior
-
-    vel_angular[i-1] = dphi/dt
-
-    t_anterior = t
-    phi_anterior = phi
-
-vel_angular = np.round(vel_angular,7)
 velocidad_precesion = scipy.stats.mode(vel_angular)[0][0]
 print("velocidad angular de precesion = "+(str)(vel_angular))
 print("velocidad angular de precesion = "+(str)(velocidad_precesion))
